@@ -1,0 +1,125 @@
+<html>
+
+<head>
+  <link href="../css/sideBar.css" rel="stylesheet">
+  <link href="../css/home.css" rel="stylesheet">
+  <script src="../js/sideBar.js"></script>
+  <script defer src="../js/home.js"></script>
+  <title> Memory Game </title>
+</head>
+
+<body>
+  <div class="page">
+
+    <nav class="side-bar" onclick="expandeSideBar()">
+
+      <div class="collapse icons" id="collapse">
+
+        <div>
+          <div class="line logo">
+            <img src="../img/miniLogo.png">
+            <div class="show"> Memory Game </div>
+          </div>
+          <div class="space"></div>
+          <a href="alterar.html" class="line">
+            <img src="../img/user.png">
+            <div class="show"> Olá, Marcelli!
+            </div>
+          </a>
+          <a href="home.html" class="line">
+            <img src="../img/home.png">
+            <div class="show"> Home </div>
+          </a>
+          <a href="alterar.html" class="line">
+            <img src="../img/edit.png">
+            <div class="show"> Editar Informações </div>
+          </a>
+          <a href="ranking.html" class="line">
+            <img src="../img/ranking.png">
+            <div class="show"> Ranking </div>
+          </a>
+        </div>
+
+        <a href="login.html" class="line">
+          <img src="../img/logout.png" class="logout">
+          <div class="show"> Logout </div>
+        </a>
+
+      </div>
+
+    </nav>
+
+    <div class="main">
+
+      <div class="buttons">
+        <div class="button time">
+          <img src="../img/time.png">
+          00:00
+        </div>
+        <div class="buttons trapaca">
+          <div class="button activate"> Ativar Trapaça </div>
+          <div class="button "> Desativar Trapaça </div>
+        </div>
+        <div class="button encerrar" onclick="loadGame()"> Encerra partida </div>
+      </div>
+
+      <div class="modal" id="modal">
+        <form class="modal-content" action="">
+          <div class="title">Jogo da Memória</div>
+          <div class="subtitles">
+            <div class="subtitles-line"></div>
+            <div class="subtitles-text"> Escolha o modo de jogo </div>
+            <div class="subtitles-line"></div>
+          </div>
+          <class class="group" id="modojogo">
+            <option class="button" id="classico" onclick="getValueModoJogo('classico')"> Clássico </option>
+            <option class="button" id="contraotempo" onclick="getValueModoJogo('contraotempo')"> Contra o tempo
+              </doptioniv>
+          </class>
+          <div class=" subtitles">
+            <div class="subtitles-line"></div>
+            <div class="subtitles-text"> Escolha o tamanho do tabuleiro </div>
+            <div class="subtitles-line"></div>
+          </div>
+          <div class="group">
+            <div class="button options" id="2" onclick="getValueTamanhoTabuleiro(2)"> 2x2 </div>
+            <div class="button options" id="4" onclick="getValueTamanhoTabuleiro(4)"> 4x4 </div>
+            <div class=" button options" id="6" onclick="getValueTamanhoTabuleiro(6)"> 6x6 </div>
+            <div class="button options" id="8" onclick="getValueTamanhoTabuleiro(8)"> 8x8 </div>
+          </div>
+          <div class="space modalSpace"></div>
+          <div class="subtitles-line divisor"></div>
+          <div class="space modalSpace"></div>
+          <div class="button iniciar" id="startGame"> Iniciar nova partida </div>
+          <div class="space modalSpace"></div>
+        </form>
+      </div>
+
+      <div class="cards">
+
+        <!-- <div class="card">
+          <div class="face front"> </div>
+          <div class="face back"> </div>
+        </div> -->
+
+        <!-- <div class="card">
+          <div class="contorno">
+            <img src="../img/miniLogo.png">
+          </div>
+        </div>
+
+        <div class="card bandeira">
+          <div class="contorno">
+            <img src="../img/bandeiras/Brasil.png">
+          </div>
+        </div> -->
+
+      </div>
+
+    </div>
+
+  </div>
+
+</body>
+
+</html>
