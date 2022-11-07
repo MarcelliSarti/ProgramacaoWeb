@@ -73,10 +73,6 @@
   font-size: 150%;
 }
 
-.modal {
-  display: none !important;
-}
-
 svg {
   cursor: pointer;
   right: 0;
