@@ -1,57 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt">
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <link href="css/home.css" rel="stylesheet">
   <link href="css/modal.css" rel="stylesheet">
-  <link href="css/sideBar.css" rel="stylesheet">
-  <link href="css/snackbar.css" rel="stylesheet">
   <title>Memory Game</title>
 </head>
 
 <body>
   <div class="page">
-    <nav class="side-bar" onclick="expandeSideBar()">
-
-      <div class="collapse icons" id="collapse">
-
-        <div>
-          <div class="line logo">
-            <img src="./img/miniLogo.png">
-            <div class="show"> Memory Game </div>
-          </div>
-          <div class="space"></div>
-          <a href="historico.html" class="line">
-            <img src="./img/user.svg">
-            <div class="show"> Olá, Marcelli! </div>
-          </a>
-          <a href="home.html" class="line selected-expanded">
-            <img src="./img/home.svg">
-            <div class="show"> Home </div>
-          </a>
-          <a href="alterar.html" class="line">
-            <img src="./img/edit.svg">
-            <div class="show"> Editar Informações </div>
-          </a>
-          <a href="ranking.html" class="line">
-            <img src="./img/ranking.svg">
-            <div class="show"> Ranking </div>
-          </a>
-        </div>
-
-        <a href="login.html" class="line">
-          <img src="../img/logout.svg" class="logout">
-          <div class="show"> Logout </div>
-        </a>
-
-      </div>
-
-    </nav>
+    <?php 
+      session_start();
+      $_SESSION['page'] = 'home';
+      include 'sideBar.php';
+      if ($_SESSION['codigo']) {
+    ?>
     <div class="main">
       <div class="buttons">
         <div class="button time"><img src="./img/clock.svg" alt="icon">
-          <div id="timer">00:00</div>
+          <div id="timer">00:00 </div>
         </div>
         <div class="middle">
           <div class="button" id="ativarTrapaca"> Ativar trapaça</div>
@@ -121,10 +89,13 @@
       </div>
       <div class="loader"></div>
     </div>
+    <?php
+      } else {
+        echo "Você precisa estar autenticado para jogar!";
+      }
+    ?>
   </div>
   <script defer src="./js/home.js"></script>
-  <script defer src="./js/sideBar.js"></script>
-  <script defer src="./js/snackbar.js"></script>
 </body>
 
 </html>

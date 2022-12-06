@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang="pt">
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -27,45 +27,46 @@
 
         <h1> Cadastro </h1>
 
-        <form class="infos" action="login.html" onsubmit="return validateCadastro()">
+        <form class="infos" action="operations/salvar_usuario.php" method="POST" id="form"
+          onsubmit="return validateForm()">
 
           <div class="field">
-            <input type="text" required>
+            <input type="text" name="nome" required>
             <label> Nome Completo </label>
           </div>
 
           <div class="field">
-            <input class="date" type="date" required>
+            <input class="date" name="data_nasc" type="date" required>
             <label> Data de nascimento </label>
           </div>
 
           <div class="field">
-            <input type="text" id="txtCpf" required>
+            <input type="text" name="cpf" id="txtCpf" required>
             <label> CPF </label>
           </div>
 
           <div class="field">
-            <input type="text" required>
+            <input type="text" name="telefone" required>
             <label> Telefone </label>
           </div>
 
           <div class="field">
-            <input type="text" id="txtEmail" required>
+            <input type="text" name="email" id="txtEmail" required>
             <label> E-mail </label>
           </div>
 
           <div class="field">
-            <input type="text" id="txtUsuario" required>
+            <input type="text" name="usuario" id="txtUsuario" required>
             <label> Usuário </label>
           </div>
 
           <div class="field">
-            <input type="password" id="txtSenha" required>
+            <input type="password" name="senha" id="txtSenha" required>
             <img src="img/eye.svg" alt="eye" id="verSenha">
             <label> Senha </label>
           </div>
 
-          <span> <a href="login.html"> Já possui cadastro? Logar! </a></span>
+          <span> <a href="login.php"> Já possui cadastro? Logar! </a></span>
 
           <input type="submit" class="button" value="Cadastrar-se">
         </form>
@@ -76,7 +77,7 @@
 
   </div>
   <script defer src="./js/senha.js"></script>
-  <script defer src="./js/cadastrar.js"></script>
+  <script defer src="./js/cadastro.js"></script>
   <script defer src="./js/snackbar.js"></script>
 </body>
 

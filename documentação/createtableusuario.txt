@@ -1,0 +1,13 @@
+CREATE TABLE `usuarios` (
+	`codigo` INT NOT NULL,
+	`nome` VARCHAR(100) NOT NULL DEFAULT '',
+	`data_nasc` DATE NOT NULL,
+	`cpf` VARCHAR(14) NOT NULL DEFAULT '',
+	`telefone` VARCHAR(15) NOT NULL DEFAULT '',
+	`email` VARCHAR(100) NOT NULL DEFAULT '',
+	`usuario` VARCHAR(50) NOT NULL DEFAULT '',
+	`senha` VARCHAR(50) NOT NULL DEFAULT '',
+	PRIMARY KEY (`codigo`)
+)
+COLLATE='utf8mb4_general_ci'
+;

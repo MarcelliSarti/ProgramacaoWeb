@@ -1,15 +1,35 @@
-const ranking = [
-  ["1°", "subiu", "Nome", "Clássico", "8x8", "5min 53s", "03/11/2022", "win"],
-  ["2°", "none", "Nome", "Contra o tempo", "8x8", "4 min", "03/11/2022", "loose"],
-  ["3°", "none", "Nome", "Clássico", "6x6", "3min 18s", "02/11/2022", "win"],
-  ["4°", "none", "Nome", "Clássico", "2x2", "14s", "02/11/2022", "win"],
-  ["5°", "subiu", "Nome", "Contra o tempo", "6x6", "1min 30s", "01/11/2022", "loose"],
-  ["6°", "subiu", "Nome", "Contra o tempo", "4x4", "1min 30s", "01/11/2022", "win"],
-  ["7°", "desceu", "Nome", "Contra o tempo", "2x2", "5s", "31/10/2022", "win"],
-  ["8°", "desceu", "Nome", "Clássico", "8x8", "10min 20s", "31/10/2022", "win"],
-  ["9°", "desceu", "Nome", "Clássico", "6x6", "5min 25s", "30/10/2022", "win"],
-  ["10°", "subiu", "Nome", "Clássico", "4x4", "3min 20s", "30/10/2022", "win"]
-]
+let ranking = []
+
+let xhttp;
+
+function createRequest() {
+  xhttp = new XMLHttpRequest();
+  if (!xhttp) {
+    createSnackBar("Não foi possível criar um objeto XMLHttpRequest!", "error");
+  }
+
+  xhttp.onreadystatechange = getDados;
+  xhttp.open('GET', 'operations/get_ranking.php', true);
+  xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  xhttp.send();
+}
+
+async function getDados() {
+  try {
+    if (xhttp.readyState === XMLHttpRequest.DONE) {
+      if (xhttp.status === 200) {
+        ranking = JSON.parse(xhttp.responseText);
+        render();
+      }
+      else {
+        createSnackBar("Um problema ocorreu!", "error");
+      }
+    }
+  }
+  catch (e) {
+    createSnackBar("Ocorreu uma exceção: " + e, "error");
+  }
+}
 
 var tr;
 var td;
@@ -43,7 +63,7 @@ function createSpanElement(text, tag) {
   return element;
 }
 
-function renderPage() {
+function render() {
   for (i = 0; i < ranking.length; i++) {
     tr = createTr();
     for (j = 0; j < ranking[i].length; j++) {
@@ -56,8 +76,11 @@ function renderPage() {
         td.appendChild(span1);
         td.appendChild(span2);
       }
+      else if (j == 3) {
+        td = createTd(ranking[i][j] == 0 ? 'Clássico' : 'Contra o tempo');
+      }
       else if (j == 7) {
-        image = ranking[i][j] == "win" ? createImageElement('./img/thumbUp.svg') : createImageElement('./img/thumbDown.svg');
+        image = ranking[i][j] == 1 ? createImageElement('./img/thumbUp.svg') : createImageElement('./img/thumbDown.svg');
         td = createTd();
         td.classList.add('color');
         td.append(image);
@@ -73,4 +96,4 @@ function renderPage() {
   }
 }
 
-renderPage();
+createRequest();

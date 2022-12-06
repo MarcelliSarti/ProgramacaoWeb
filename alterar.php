@@ -1,62 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt">
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <link href="css/modal.css" rel="stylesheet">
   <link href="css/alterar.css" rel="stylesheet">
   <link href="css/forms.css" rel="stylesheet">
-  <link href="css/sideBar.css" rel="stylesheet">
-  <link href="css/snackbar.css" rel="stylesheet">
   <title>Memory Game</title>
 </head>
 
 <body>
   <div class="page">
-    <nav class="side-bar" onclick="expandeSideBar()">
-
-      <div class="collapse icons" id="collapse">
-
-        <div>
-          <div class="line logo">
-            <img src="./img/miniLogo.png">
-            <div class="show"> Memory Game </div>
-          </div>
-          <div class="space"></div>
-          <a href="historico.html" class="line">
-            <img src="./img/user.svg">
-            <div class="show"> Olá, Marcelli! </div>
-          </a>
-          <a href="home.html" class="line ">
-            <img src="./img/home.svg">
-            <div class="show"> Home </div>
-          </a>
-          <a href="alterar.html" class="line selected-expanded">
-            <img src="./img/edit.svg">
-            <div class="show"> Editar Informações </div>
-          </a>
-          <a href="ranking.html" class="line">
-            <img src="./img/ranking.svg">
-            <div class="show"> Ranking </div>
-          </a>
-        </div>
-
-        <a href="login.html" class="line">
-          <img src="../img/logout.svg" class="logout">
-          <div class="show"> Logout </div>
-        </a>
-
-      </div>
-
-    </nav>
+    <?php 
+      session_start();
+      $_SESSION['page'] = 'alterar';
+      include 'sideBar.php';
+      if ($_SESSION['codigo']) {
+    ?>
     <div class="main">
       <div class="container">
         <div class="head"> Alterar Usuário </div>
         <div class="body">
-          <form class="infos" onsubmit="return false">
+          <form class="infos" action="operations/alterar_usuario.php" id="form" method="POST">
 
             <div class="field alterar">
-              <input type="text" required id="txtName">
+              <input type="text" required id="txtName" name="nome">
               <label> Nome Completo </label>
             </div>
 
@@ -71,12 +39,12 @@
             </div>
 
             <div class="field alterar">
-              <input type="text" required id="txtNumber">
+              <input type="text" required id="txtNumber" name="telefone">
               <label> Telefone </label>
             </div>
 
             <div class="field alterar">
-              <input type="text" required id="txtEmail">
+              <input type="text" required id="txtEmail" name="email">
               <label> E-mail </label>
             </div>
 
@@ -86,7 +54,7 @@
             </div>
 
             <div class="field alterar">
-              <input type="password" required id="txtSenha">
+              <input type="password" required id="txtSenha" name="senha">
               <label> Senha </label>
               <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#9A1032"
                 id="verSenha">
@@ -96,7 +64,7 @@
               </svg>
             </div>
 
-            <input type="submit" class="button alterarB" value="Salvar" onclick="temCerteza()">
+            <input type="button" class="button alterarB" value="Salvar" onclick="temCerteza()">
           </form>
         </div>
       </div>
@@ -115,17 +83,20 @@
           <div class="space"></div>
           <div class="buttons">
             <div class="cancel modalButton" onclick="cancel()"> Cancelar </div>
-            <div class="modalButton" onclick="salvar()"> Sim, salvar </div>
+            <div class="modalButton" onclick="validateForm()"> Sim, salvar </div>
           </div>
           <div class="space"></div>
         </div>
       </div>
     </div>
+    <?php
+      } else {
+        echo "Você precisa estar autenticado para alterar informações!";
+      }
+    ?>
   </div>
   <script defer src="./js/senha.js"></script>
   <script defer src="./js/alterar.js"></script>
-  <script defer src="./js/sideBar.js"></script>
-  <script defer src="./js/snackbar.js"></script>
 </body>
 
 </html>

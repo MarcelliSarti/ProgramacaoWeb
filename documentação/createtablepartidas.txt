@@ -1,0 +1,17 @@
+modo_jogo = 0-classico 1-contra o tempo
+resultado = 0-perdeu   1-ganhou
+
+CREATE TABLE partidas (
+  `codigo` int(11) NOT NULL,
+  `codigo_usuario` int(11) NOT NULL,
+  `modo_jogo` int(11) NOT NULL,
+  `tamanho_tabuleiro` int(11) NOT NULL,
+  `tempo` varchar(10) NOT NULL,
+  `data` date NOT NULL,
+  `resultado` int(11) NOT NULL,
+  PRIMARY KEY (`codigo`),
+  KEY `codigo_usuario` (`codigo_usuario`),
+  CONSTRAINT `partidas_ibfk_1` FOREIGN KEY (`codigo_usuario`) REFERENCES `usuarios` (`codigo`)
+) ;
+
+

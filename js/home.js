@@ -1,11 +1,14 @@
-var modoJogo = 'classico';
-var tamanhoTabuleiro = 2;
-var trapaca = false;
-var endGame = false;
+let modoJogo = 'classico';
+let tamanhoTabuleiro = 2;
+let trapaca = false;
+let endGame = false;
 let selectCards = [];
 let qtdCards = 0;
 let firstCard = '';
 let secondCard = '';
+let globalTimer;
+
+let xhttp;
 
 const cards = document.querySelector(".cards");
 const modal = document.getElementById("modal");
@@ -20,21 +23,21 @@ const cardImages = ['qat', 'ecu', 'sen', 'ned', 'eng', 'irn', 'usa', 'wal', 'arg
 
 function getValueModoJogo(modoJogoSelect) {
     if (modoJogo != '') {
-        var optionModoJogoDeActivated = document.getElementById(modoJogo);
+        let optionModoJogoDeActivated = document.getElementById(modoJogo);
         optionModoJogoDeActivated.classList.remove("active");
     }
     modoJogo = modoJogoSelect;
-    var optionModoJogoActivated = document.getElementById(modoJogoSelect);
+    let optionModoJogoActivated = document.getElementById(modoJogoSelect);
     optionModoJogoActivated.classList.add("active");
 }
 
 function getValueTamanhoTabuleiro(tamanhoTabuleiroSelect) {
     if (tamanhoTabuleiro != '') {
-        var optionTamanhoTabuleiroDeActivated = document.getElementById(tamanhoTabuleiro);
+        let optionTamanhoTabuleiroDeActivated = document.getElementById(tamanhoTabuleiro);
         optionTamanhoTabuleiroDeActivated.classList.remove("active");
     }
     tamanhoTabuleiro = tamanhoTabuleiroSelect;
-    var optionTamanhoTabuleiroActivated = document.getElementById(tamanhoTabuleiro);
+    let optionTamanhoTabuleiroActivated = document.getElementById(tamanhoTabuleiro);
     optionTamanhoTabuleiroActivated.classList.add("active");
 }
 
@@ -68,7 +71,7 @@ const checkEndGame = () => {
     if (disableCards.length === qtdCards * 2) {
         createSnackBar("Parabéns você conseguiu!", "ok");
         setTimeout(() => {
-            saveGameInformation();
+            saveGameInformation(globalTimer, 1);
         }, 1500);
     }
 }
@@ -168,8 +171,8 @@ function createCard(cardImage) {
     return card;
 }
 
-var display = document.querySelector("#timer");
-var duration = 0;
+let display = document.querySelector("#timer");
+let duration = 0;
 
 function contraTempoTimer() {
     switch (tamanhoTabuleiro) {
@@ -190,7 +193,16 @@ function contraTempoTimer() {
             break;
     }
 
-    var timer = duration, minutes, seconds;
+    let timer = duration, minutes, seconds;
+
+    //definindo o tempo inicial na variável global
+    minutes = parseInt(timer / 60, 10);
+    seconds = parseInt(timer % 60, 10);
+
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    seconds = seconds < 10 ? "0" + seconds : seconds;
+
+    globalTimer = minutes + ":" + seconds;
 
     setInterval(function () {
         minutes = parseInt(timer / 60, 10);
@@ -205,7 +217,7 @@ function contraTempoTimer() {
             createSnackBar("Seu tempo acabou!", "error");
             endGame = true;
             setTimeout(() => {
-                saveGameInformation();
+                saveGameInformation(globalTimer, 0);
             }, 1500);
         }
 
@@ -213,7 +225,7 @@ function contraTempoTimer() {
 }
 
 function classicoTimer() {
-    var timer = duration, minutes, seconds;
+    let timer = duration, minutes, seconds;
 
     setInterval(function () {
         minutes = parseInt(timer / 60, 10);
@@ -224,7 +236,9 @@ function classicoTimer() {
 
         display.textContent = minutes + ":" + seconds;
 
-        ++timer;
+        ++timer
+
+        globalTimer = minutes + ":" + seconds;
 
     }, 1000);
 }
@@ -278,10 +292,46 @@ function endGameButton() {
     createSnackBar("Partida encerrada!", "ok");
     endGame = true;
     setTimeout(() => {
-        saveGameInformation();
+        saveGameInformation(globalTimer, 0);
     }, 1500);
 }
 
-function saveGameInformation() {
-    location.reload();
+function saveGameInformation(time, resultado) {
+    console.log(modoJogo, tamanhoTabuleiro, time, "data", resultado);
+
+    xhttp = new XMLHttpRequest();
+    if (!xhttp) {
+        createSnackBar("Não foi possível criar um objeto XMLHttpRequest!", "error");
+    }
+
+    xhttp.open('POST', 'operations/salvar_partida.php', true);
+    xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhttp.send('modo_jogo=' + encodeURIComponent(modoJogo == 'classico' ? 0 : 1) + '&tamanho_tabuleiro=' + encodeURIComponent(tamanhoTabuleiro) + '&time=' + encodeURIComponent(time) + '&resultado=' + encodeURIComponent(resultado));
+    xhttp.onreadystatechange = validateFormPhp;
+}
+
+async function validateFormPhp() {
+    try {
+        if (xhttp.readyState === XMLHttpRequest.DONE) {
+            if (xhttp.status === 200) {
+                let resposta = JSON.parse(xhttp.responseText);
+                console.log(resposta);
+                if (resposta[0]) {
+                    location.reload();
+                } else {
+                    createSnackBar("Erro ao inserir informações da partida! " + resposta[0], "error");
+                    setTimeout(() => {
+                        location.reload();
+                    }, 800);
+                }
+            }
+            else {
+                createSnackBar("Um problema ocorreu!", "error");
+            }
+        }
+    }
+    catch (e) {
+        console.log(e);
+        createSnackBar("Ocorreu uma exceção: " + e, "error");
+    }
 }

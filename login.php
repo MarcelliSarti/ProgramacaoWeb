@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt">
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -22,21 +22,21 @@
           <img src="img/miniLogo.png" alt="logo">
         </div>
 
-        <form class="infos" action="home.html" onsubmit="return logOn()">
+        <form class="infos" action="home.php" id="form" onsubmit="return logOn()">
           <h1> Login </h1>
 
           <div class="field">
-            <input type="text" id="txtUsuario" required>
+            <input type="text" name="user" id="txtUsuario" required>
             <label> Usuário </label>
           </div>
 
           <div class="field">
-            <input type="password" id="txtSenha" required>
+            <input type="password" name="senha" id="txtSenha" required>
             <img src="img/eye.svg" alt="eye" id="verSenha">
             <label> Senha </label>
           </div>
 
-          <span> <a href="cadastro.html"> Não possui cadastro? Cadastrar-se! </a></span>
+          <span> <a href="cadastro.php"> Não possui cadastro? Cadastrar-se! </a></span>
 
           <input type="submit" class="button" value="Entrar">
         </form>
