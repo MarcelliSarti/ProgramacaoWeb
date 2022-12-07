@@ -9,7 +9,6 @@ function logOn() {
     createSnackBar("Não foi possível criar um objeto XMLHttpRequest!", "error");
     return false;
   }
-
   xhttp.onreadystatechange = logOnPhp;
   xhttp.open('POST', 'operations/autenticacao.php', true);
   xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -22,9 +21,11 @@ async function logOnPhp() {
   try {
 
     if (xhttp.readyState === XMLHttpRequest.DONE) {
+      console.log(xhttp.responseText);
       if (xhttp.status === 200) {
+       
         let resposta = JSON.parse(xhttp.responseText);
-        if (!(resposta)) {
+        if (!resposta[0]) {
           createSnackBar("Usuário ou senha incorreto(s), tente novamente!", "error");
         }
         else {

@@ -1,9 +1,10 @@
 <?php
   $sname = "localhost";
   $uname = "root";
-  $pwd = "";
+  $pwd = "abc123@XYZ";
+  $port = "3307";
   try {
-    $conn = new PDO("mysql:host=$sname;dbname=myDB", $uname, $pwd);
+    $conn = new PDO("mysql:host=$sname;dbname=myDB;port=$port", $uname, $pwd);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   }
   catch(PDOException $e){
